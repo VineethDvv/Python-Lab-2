@@ -29,7 +29,7 @@ classification_1.fit(train,train_label)
 classification_2=LinearRegression()
 classification_2.fit(train_eda,train_eda_label)
 
-#resilts on test data
+#results on test data
 result_1=classification_1.predict(test)
 result_2=classification_2.predict(test)
 
