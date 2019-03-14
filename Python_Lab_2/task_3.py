@@ -1,83 +1,64 @@
+import nltk
+import collections
+import numpy
+from nltk.stem  import LancasterStemmer
+from nltk.stem import PorterStemmer
+from nltk.stem import SnowballStemmer
+from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import word_tokenize, sent_tokenize
+from nltk import ngrams,ne_chunk,wordpunct_tokenize,pos_tag,FreqDist
 
-import urllib.request
-import nltk as nltk
-import requests
-from bs4 import BeautifulSoup
-from nltk.tokenize import word_tokenize, sent_tokenize, wordpunct_tokenize
-from nltk.stem import LancasterStemmer, SnowballStemmer, WordNetLemmatizer, PorterStemmer
-from nltk import pos_tag, ne_chunk, ngrams
-nltk.download()
+with open('data_set.txt', 'r') as f:
+  raw=f.read()
 
-# Reading Text from the URL
-page_link = 'https://en.wikipedia.org/wiki/Google'
-page_response = requests.get(page_link, timeout=5)
-soup = BeautifulSoup(page_response.content, "html.parser")
+#Tokenization of the text
+word_tokens=nltk.word_tokenize(raw)
+print(word_tokens)
 
-# Kill all script and style elements
-for script in soup(["script", "style"]):
-    # Rip it Off
-    script.extract()
-
-# get text
-text = soup.body.get_text()
-
-# break into lines and remove leading and trailing space on each
-lines = (line.strip() for line in text.splitlines())
-
-# break multi-headlines into a line each
-chunks = (phrase.strip() for line in lines for phrase in line.split(" "))
-
-# drop blank lines
-text = ' '.join(chunk for chunk in chunks if chunk)
-
-# Saving to a Text File
-f = open('raj.html', 'a', encoding="utf-8")
-f.write(soup.text);
-
-# Reading from a Text File
-with open('Input.txt', 'r') as text_file:
-    read_data = text_file.read()
-
-# Tokenization
-"""Sentence Tokenization"""
-sentTok = sent_tokenize(text)
-print("Sentence Tokenization : \n", sentTok)
-
-#"""Word Tokenization"""
-tokens = [word_tokenize(t) for t in sentTok]
-
-print ("Word Tokenization : \n", tokens)
-
-# Stemming
-# 1 -> LancasterStemmer
-lStem = LancasterStemmer()
-
-print("Lancaster Stemming is : \n")
-for tok in tokens:
-  print(lStem.stem(str(tok)))
-
-#POS
-print("Speech Tagging :\n", pos_tag(word_tokenize(text)))
-
-# Lemmatization
+#lemmatization of the text
 lemmatizer = WordNetLemmatizer()
-print("Lemmatization :\n")
+print("Lemmatization ------------------------------------------------------------:\n")
 
-for tok in tokens:
-    print(lemmatizer.lemmatize(str(tok)))
+for tok in word_tokens:
+  print(lemmatizer.lemmatize(str(tok)))
 
-# Trigram
-print("Trigrams :\n")
+#printing trigrams
+print("Trigrams -------------------------------------------------------------------:\n")
 trigram = []
-
-for x in tokens:
-    trigram.append(list(ngrams(x, 3)))
-
+x=0
+trigram.append(list(ngrams(word_tokens, 3)))
 print(trigram)
 
-# Named Entity Recognition
-print("NER : \n", ne_chunk(pos_tag(wordpunct_tokenize(str(tokens)))))
+TrigramsOutput = []
+for big in ngrams(word_tokens, 3):
+    # getting the trigrams using ngrams and iterating them
+    TrigramsOutput.append(big)
+print(TrigramsOutput)
 
+wordFreq = FreqDist(TrigramsOutput)
+print(wordFreq)
+most_Common_word = wordFreq.most_common()
+print(most_Common_word)
 
+#top 10 most repeated trigrams
+most_Common10_words = wordFreq.most_common(10)
+print(most_Common10_words)
 
+#print sentences
+sent_Tokens = sent_tokenize(raw)
+print(sent_Tokens)
 
+#array to append the sentences
+concatenatedArray = []
+#iterating through sentences
+for sentence in sent_Tokens:
+    #going through the present trigrams
+    for a, b ,c in TrigramsOutput:
+        #top 5 trigrams
+        for ((c, m, n ), length) in most_Common10_words:
+            #comparing them with top 5 trigrams
+            if(a, b, c == c, m, n):
+                #appending the array
+                concatenatedArray.append(sentence)
+#printing the concatenated result
+print("Max of Concatenated Array : ", max(concatenatedArray))
