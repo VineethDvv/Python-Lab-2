@@ -14,13 +14,13 @@ data_set['Embarked'] = data_set['Embarked'].map({'Q': 1, 'S': 0 ,'C':2})
 #replacing the male and female with 0 and 1
 data_set['Sex'] = data_set['Sex'].map({'female': 1, 'male': 0})
 
-#replacing all the zero values with the average values
+#replacing all the null values with the average values
 data_set.select_dtypes(include=[np.number]).interpolate().dropna()
 
-#printinting the survived mean values  of two different sex column values which we changed in to numerical
+#printing the survived mean values of two different sex column values which we changed in to numerical
 print(data_set[['Sex', 'Survived']].groupby(['Sex'], as_index=False).mean())
 
-#printinting the survived mean values  of the different Pclass values
+#printing the survived mean valuesof Pclass values
 print(data_set[['Pclass', 'Survived']].groupby(['Pclass'], as_index=False).mean())
 
 data_set['Age'].fillna(data_set['Age'].mean(),inplace =True)
@@ -37,15 +37,15 @@ train=train.drop(columns=['Survived'])
 test_label=test['Survived']
 test=test.drop(columns=['Survived'])
 
-# fitting the Naive Bayes Classifier
+#Naive Bayes Classifier
 NBclf=GaussianNB()
 NBclf.fit(train,train_label)
 
-#fitting the Support Vector Classifier
+#Support Vector Classifier
 SVCclf=SVC()
 SVCclf.fit(train,train_label)
 
-#fitting K Nearest Neighbour classifier
+#K Nearest Neighbour classifier
 KNNclf=KNeighborsClassifier(n_neighbors=2)
 KNNclf.fit(train,train_label)
 nbscore= NBclf.score(test,test_label)
