@@ -21,9 +21,10 @@ train_eda=train_eda.drop(columns=['sales'])
 
 test=test.drop(columns=['sales'])
 
-#Linear regression without EDA
+#Multiple Linear regression without EDA
 classification_1 = LinearRegression()
 classification_1.fit(train,train_label)
+
 #Linear regression with EDA
 classification_2=LinearRegression()
 classification_2.fit(train_eda,train_eda_label)
