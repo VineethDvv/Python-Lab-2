@@ -14,13 +14,13 @@ data_set['Embarked'] = data_set['Embarked'].map({'Q': 1, 'S': 0 ,'C':2})
 #replacing the male and female with 0 and 1
 data_set['Sex'] = data_set['Sex'].map({'female': 1, 'male': 0})
 
-#replacing all the zero values with the average values
+#replacing all the null values with the average values
 data_set.select_dtypes(include=[np.number]).interpolate().dropna()
 
-#printinting the survived mean values  of two different sex column values which we changed in to numerical
+#printing the survived mean values of two different sex column values which we changed in to numerical
 print(data_set[['Sex', 'Survived']].groupby(['Sex'], as_index=False).mean())
 
-#printinting the survived mean values  of the different Pclass values
+#printing the survived mean valuesof Pclass values
 print(data_set[['Pclass', 'Survived']].groupby(['Pclass'], as_index=False).mean())
 
 data_set['Age'].fillna(data_set['Age'].mean(),inplace =True)
