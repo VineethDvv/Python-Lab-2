@@ -41,7 +41,7 @@ test=test.drop(columns=['Survived'])
 NBclf=GaussianNB()
 NBclf.fit(train,train_label)
 
-#fitting the Support Vector Classifier
+#Support Vector Classifier
 SVCclf=SVC()
 SVCclf.fit(train,train_label)
 
