@@ -37,7 +37,7 @@ train=train.drop(columns=['Survived'])
 test_label=test['Survived']
 test=test.drop(columns=['Survived'])
 
-# fitting the Naive Bayes Classifier
+#Naive Bayes Classifier
 NBclf=GaussianNB()
 NBclf.fit(train,train_label)
 
