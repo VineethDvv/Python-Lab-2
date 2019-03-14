@@ -45,7 +45,7 @@ NBclf.fit(train,train_label)
 SVCclf=SVC()
 SVCclf.fit(train,train_label)
 
-#fitting K Nearest Neighbour classifier
+#K Nearest Neighbour classifier
 KNNclf=KNeighborsClassifier(n_neighbors=2)
 KNNclf.fit(train,train_label)
 nbscore= NBclf.score(test,test_label)
