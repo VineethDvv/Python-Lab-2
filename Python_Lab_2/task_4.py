@@ -33,13 +33,14 @@ classification_2.fit(train_eda,train_eda_label)
 result_1=classification_1.predict(test)
 result_2=classification_2.predict(test)
 
+#mean squared error and r2 score with EDA
+mean_squared_error_eda=mean_squared_error(test_label,result_2)
+r2_score_eda=r2_score(test_label,result_2)
+
 #mean squared error and r2 score without EDA
 mean_squared_error = mean_squared_error(test_label, result_1)
 r2_score = r2_score(test_label,result_1)
 
-#mean squared error and r2 score with EDA
-mean_squared_error_eda=mean_squared_error(test_label,result_2)
-r2_score_eda=r2_score(test_label,result_2)
 
 print("mean squared error without EDA is :",mean_squared_error)
 print("R2 score with EDA is :",r2_score)
